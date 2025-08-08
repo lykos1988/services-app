@@ -1,0 +1,102 @@
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: #f9f9f9;
+    color: #222;
+    margin: 0; padding: 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: 2rem auto;
+    background: white;
+    padding: 1.5rem 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+h1, h2 {
+    color: #2c3e50;
+}
+
+a {
+    color: #2980b9;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+nav {
+    background: #34495e;
+    color: white;
+    padding: 1rem 2rem;
+    margin-bottom: 2rem;
+}
+
+nav a, nav span {
+    margin-right: 1rem;
+    color: white;
+}
+
+.flash-messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1rem;
+}
+
+.flash-messages li {
+    background: #e74c3c;
+    color: white;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.3rem;
+    border-radius: 4px;
+}
+
+.services-list {
+    list-style: none;
+    padding: 0;
+}
+
+.services-list li {
+    border-bottom: 1px solid #ccc;
+    padding: 1rem 0;
+}
+
+.services-list li:last-child {
+    border: none;
+}
+
+.services-list h2 {
+    margin: 0 0 0.2rem 0;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: #27ae60;
+    color: white;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background: #219150;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 0.75rem 1rem;
+    border: 1px solid #ccc;
+}
+
+table th {
+    background: #2980b9;
+    color: white;
+    text-align: left;
+}
