@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="el" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Αρχική - Υπηρεσίες</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+  <header class="bg-indigo-600 text-white shadow">
+    <nav class="container mx-auto flex justify-between items-center p-4">
+      <div class="font-bold text-xl">Υπηρεσίες Πόλης</div>
+      <div class="space-x-4 text-sm">
+        {% if user %}
+          <span>Καλώς ήρθες, <strong>{{ user }}</strong></span>
+          <a href="{{ url_for('logout') }}" class="hover:underline">Αποσύνδεση</a>
+          <a href="{{ url_for('add_service') }}" class="hover:underline">Προσθήκη Υπηρεσίας</a>
+        {% else %}
+          <a href="{{ url_for('login') }}" class="hover:underline">Σύνδεση</a>
+          <a href="{{ url_for('register') }}" class="hover:underline">Εγγραφή</a>
+        {% endif %}
+        <a href="{{ url_for('owner_bookings') }}" class="relative hover:underline">
+          Κρατήσεις
+          <span id="new-bookings-badge" class="hidden absolute -top-2 -right-3 bg-red-600 text-white rounded-full text-xs px-2"></span>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container mx-auto flex-grow p-6">
+    <h1 class="text-3xl font-semibold mb-6 text-indigo-700">Διαθέσιμες Υπηρεσίες</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="mb-6 space-y-2">
+          {% for category, message in messages %}
+            <div class="p-3 rounded border 
+              {% if category == 'success' %}bg-green-100 border-green-400 text-green-700
+              {% elif category == 'danger' %}bg-red-100 border-red-400 text-red-700
+              {% elif category == 'warning' %}bg-yellow-100 border-yellow-400 text-yellow-700
+              {% else %}bg-gray-100 border-gray-400 text-gray-700
+              {% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% if services %}
+      <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for service in services %}
+          <li class="bg-white rounded-lg shadow p-5 flex flex-col justify-between">
+            <div>
+              <h2 class="text-xl font-semibold text-indigo-800">{{ service.name }}</h2>
+              <p class="text-gray-600 mt-2">{{ service.description }}</p>
+              <p class="mt-3 font-bold text-indigo-700">Τιμή: {{ service.price }} €</p>
+              <p class="text-sm text-gray-500 mt-1">Προσφέρει: {{ service.fullname }}</p>
+            </div>
+            <a href="{{ url_for('book_service', service_id=service.id) }}" class="mt-4 block bg-indigo-600 hover:bg-indigo-700 text-white text-center py-2 rounded shadow transition">Κράτηση</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-gray-600 italic">Δεν υπάρχουν διαθέσιμες υπηρεσίες.</p>
+    {% endif %}
+  </main>
+
+  <footer class="bg-indigo-600 text-white text-center py-4">
+    © 2025 Υπηρεσίες Πόλης
+  </footer>
+
+  <script>
+    function updateBookingBadge() {
+      fetch('{{ url_for("new_bookings_count") }}')
+        .then(res => res.json())
+        .then(data => {
+          const badge = document.getElementById('new-bookings-badge');
+          if (data.new_count > 0) {
+            badge.textContent = data.new_count;
+            badge.classList.remove('hidden');
+          } else {
+            badge.classList.add('hidden');
+          }
+        });
+    }
+    setInterval(updateBookingBadge, 30000);
+    updateBookingBadge();
+  </script>
+
+</body>
+</html>

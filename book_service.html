@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="el" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Κράτηση Υπηρεσίας</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+  <header class="bg-indigo-600 text-white shadow">
+    <nav class="container mx-auto flex justify-between items-center p-4">
+      <div class="font-bold text-xl">Κράτηση Υπηρεσίας</div>
+      <div>
+        <a href="{{ url_for('home') }}" class="hover:underline">Αρχική</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container mx-auto flex-grow p-6 max-w-md">
+    <h1 class="text-2xl font-semibold mb-4 text-indigo-700">{{ service.name }}</h1>
+    <p class="mb-6 text-gray-700">{{ service.description }}</p>
+    <p class="mb-6 font-bold text-indigo-700">Τιμή: {{ service.price }} €</p>
+
+    <form method="POST" action="{{ url_for('book_service', service_id=service.id) }}" class="space-y-4 bg-white p-6 rounded shadow">
+      <label for="email" class="block text-gray-700 font-semibold">Email για την κράτηση</label>
+      <input type="email" id="email" name="email" required class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+      <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded font-semibold transition">Κράτηση</button>
+    </form>
+  </main>
+
+  <footer class="bg-indigo-600 text-white text-center py-4">
+    © 2025 Υπηρεσίες Πόλης
+  </footer>
+
+</body>
+</html>

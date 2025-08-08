@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="el" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Προσθήκη Υπηρεσίας</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+  <header class="bg-indigo-600 text-white shadow">
+    <nav class="container mx-auto flex justify-between items-center p-4">
+      <div class="font-bold text-xl">Προσθήκη Υπηρεσίας</div>
+      <div>
+        <a href="{{ url_for('home') }}" class="hover:underline">Αρχική</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container mx-auto flex-grow p-6 max-w-lg">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="mb-6 space-y-2">
+          {% for category, message in messages %}
+            <div class="p-3 rounded border 
+              {% if category == 'success' %}bg-green-100 border-green-400 text-green-700
+              {% elif category == 'danger' %}bg-red-100 border-red-400 text-red-700
+              {% elif category == 'warning' %}bg-yellow-100 border-yellow-400 text-yellow-700
+              {% else %}bg-gray-100 border-gray-400 text-gray-700
+              {% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('add_service') }}" class="space-y-4 bg-white p-6 rounded shadow">
+      <div>
+        <label for="name" class="block text-gray-700 mb-1 font-semibold">Όνομα Υπηρεσίας</label>
+        <input type="text" id="name" name="name" required class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+      </div>
+      <div>
+        <label for="description" class="block text-gray-700 mb-1 font-semibold">Περιγραφή</label>
+        <textarea id="description" name="description" required rows="4" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+      </div>
+      <div>
+        <label for="price" class="block text-gray-700 mb-1 font-semibold">Τιμή (€)</label>
+        <input type="number" step="0.01" id="price" name="price" required class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+      </div>
+      <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded font-semibold transition">Πρόσθεσε</button>
+    </form>
+  </main>
+
+  <footer class="bg-indigo-600 text-white text-center py-4">
+    © 2025 Υπηρεσίες Πόλης
+  </footer>
+
+</body>
+</html>
